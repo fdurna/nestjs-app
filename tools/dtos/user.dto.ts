@@ -6,7 +6,7 @@ export class UserCreateDto {
   @Length(2, 20)
   @ApiProperty()
   name: string;
-  @Length(2, 5)
+  @Length(2, 25)
   @ApiProperty()
   surname: string;
   @ApiProperty()
@@ -15,7 +15,7 @@ export class UserCreateDto {
   @ApiProperty()
   email: string;
   @ApiProperty()
-  @IsDateString()
+  //@IsDateString()
   birthdate: string;
 }
 

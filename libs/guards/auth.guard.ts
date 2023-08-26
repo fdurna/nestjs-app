@@ -15,7 +15,7 @@ import { GroupService } from 'src/group/group.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    @Inject('GroupService') private readonly groupService: GroupService,
+    private readonly groupService: GroupService,
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
