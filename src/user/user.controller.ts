@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { UserCreateDto, UserUpdateDto } from 'tools/dtos/user.dto';
 import { UserModel } from 'tools/models/user.model';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { Roles } from 'libs/decorators/role.decorators';
 
 @ApiBearerAuth()
 @Controller('user')
@@ -10,12 +11,14 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
+  @Roles('Admin')
   async createUser(@Body() body: UserCreateDto): Promise<UserModel> {
     body.password = await this.userService.covertToHash(body.password);
     return await this.userService.create(body);
   }
 
   @Get()
+  @Roles('Developer')
   async getAllUsers(): Promise<UserModel[]> {
     return await this.userService.findAll();
   }

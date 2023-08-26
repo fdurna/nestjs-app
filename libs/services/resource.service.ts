@@ -10,6 +10,7 @@ export class ResourceService<T, C, U> {
     audit.createdBy = 'Admin';
     audit.createdDate = new Date();
     const createdModel = new this.mongoModel({ ...model, ...audit });
+    console.log('createdModel', createdModel);
     return await createdModel.save();
   }
 
