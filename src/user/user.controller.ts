@@ -11,14 +11,14 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  @Roles('Admin')
+  @Roles('Developer')
   async createUser(@Body() body: UserCreateDto): Promise<UserModel> {
     body.password = await this.userService.covertToHash(body.password);
     return await this.userService.create(body);
   }
 
   @Get()
-  @Roles('Developer')
+  @Roles('Admin')
   async getAllUsers(): Promise<UserModel[]> {
     return await this.userService.findAll();
   }

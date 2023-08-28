@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     private readonly groupService: GroupService,
   ) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const allowedRoles = this.reflector.get<string[]>(
       'roles',
       context.getHandler(),
@@ -29,32 +29,18 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const user = request.user.user;
-    const allowed = this.isAllowed(allowedRoles, user.roles, user.groups);
-
-    if (!allowed) {
+    const allowed = this.isAllowed(allowedRoles, user.roles);
+    if (!(await allowed)) {
       throw new HttpException('Forbidden Method!', HttpStatus.FORBIDDEN);
     }
-
     return true;
   }
 
-  async isAllowed(
-    allowedRoles,
-    userRoles: RoleModel[],
-    userGroups: GroupModel[],
-  ) {
+  async isAllowed(allowedRoles, userRoles: RoleModel[]) {
     const allUsersRoles = [];
     userRoles.map((data) => {
       allUsersRoles.push(data.name);
     });
-    await Promise.all(
-      userGroups.map(async (data) => {
-        const groupRoles = await this.groupService.findOne(data._id);
-        groupRoles[0].roles.map((resp) => {
-          allUsersRoles.push(resp['name']);
-        });
-      }),
-    );
     const hasRole = allUsersRoles.some((role) => allowedRoles.includes(role));
     return hasRole;
   }
