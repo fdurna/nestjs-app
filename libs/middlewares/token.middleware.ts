@@ -13,7 +13,7 @@ export class TokenMiddleware implements NestMiddleware {
   // eslint-disable-next-line @typescript-eslint/ban-types
   use(req: Request, res: Response, next: Function) {
     const authJsonWebToken = req.headers.authorization;
-
+    console.log('req', req.headers);
     if (req.baseUrl !== '/api/login') {
       if (!authJsonWebToken) {
         //next();

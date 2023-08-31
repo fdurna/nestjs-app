@@ -3,6 +3,7 @@ import {
   Module,
   NestModule,
   RequestMethod,
+  ValidationPipe,
 } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
@@ -13,7 +14,7 @@ import { LoginModule } from './login/login.module';
 import { RoleModule } from './role/role.module';
 import { TokenMiddleware } from 'libs/middlewares/token.middleware';
 import { AppService } from './app.service';
-import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { AuthGuard } from 'libs/guards/auth.guard';
 import { GroupModule } from './group/group.module';
 import { AppController } from './app.controller';
@@ -33,6 +34,10 @@ import { LoggingInterceptor } from '../libs/interception';
     {
       provide: APP_FILTER,
       useClass: AllExceptionFilter,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
     },
     {
       provide: APP_GUARD,
