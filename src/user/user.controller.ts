@@ -10,9 +10,10 @@ import {
 import { UserService } from './user.service';
 import { UserCreateDto, UserUpdateDto } from 'tools/dtos/user.dto';
 import { UserModel } from 'tools/models/user.model';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'libs/decorators/role.decorators';
 
+@ApiTags('User')
 @ApiBearerAuth()
 @Controller('user')
 export class UserController {

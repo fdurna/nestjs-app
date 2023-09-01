@@ -7,10 +7,12 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import { RoleModel } from 'tools/models/role.model';
 import { RoleDto } from 'tools/dtos/role.dto';
-
+@ApiTags('Role')
+@ApiBearerAuth()
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}

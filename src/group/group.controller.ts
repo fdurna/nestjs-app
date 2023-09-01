@@ -10,7 +10,9 @@ import {
 import { GroupService } from './group.service';
 import { GroupModel } from 'tools/models/group.model';
 import { GroupCreateDto } from 'tools/dtos/group.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Group')
 @Controller('group')
 export class GroupController {
   constructor(private readonly groupService: GroupService) {}

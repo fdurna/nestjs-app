@@ -36,16 +36,16 @@ import { LoggingInterceptor } from '../libs/interception';
       useClass: AllExceptionFilter,
     },
     {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+    {
       provide: APP_PIPE,
       useClass: ValidationPipe,
     },
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor,
     },
   ],
 })
